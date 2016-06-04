@@ -24,20 +24,20 @@ public final class CVCalendarTouchController {
     }
 }
 
-// MARK: - Events receive 
+// MARK: - Events receive
 
 extension CVCalendarTouchController {
     public func receiveTouchLocation(location: CGPoint, inMonthView monthView: CVCalendarMonthView, withSelectionType selectionType: CVSelectionType) {
-//        let weekViews = monthView.weekViews
+        //        let weekViews = monthView.weekViews
         if let dayView = ownerTouchLocation(location, onMonthView: monthView) where dayView.userInteractionEnabled {
             receiveTouchOnDayView(dayView, withSelectionType: selectionType)
         }
     }
     
     public func receiveTouchLocation(location: CGPoint, inWeekView weekView: CVCalendarWeekView, withSelectionType selectionType: CVSelectionType) {
-//        let monthView = weekView.monthView
-//        let index = weekView.index
-//        let weekViews = monthView.weekViews
+        //        let monthView = weekView.monthView
+        //        let index = weekView.index
+        //        let weekViews = monthView.weekViews
         
         if let dayView = ownerTouchLocation(location, onWeekView: weekView) where dayView.userInteractionEnabled {
             receiveTouchOnDayView(dayView, withSelectionType: selectionType)
@@ -49,15 +49,17 @@ extension CVCalendarTouchController {
     }
 }
 
-// MARK: - Events management 
+// MARK: - Events management
 
 private extension CVCalendarTouchController {
     func receiveTouchOnDayView(dayView: CVCalendarDayView, withSelectionType selectionType: CVSelectionType) {
         if let calendarView = dayView.weekView.monthView.calendarView {
             switch selectionType {
             case .Single:
-                coordinator.performDayViewSingleSelection(dayView)
-                calendarView.didSelectDayView(dayView)
+                if calendarView.delegate!.shouldSelectDayView(dayView) {
+                    coordinator.performDayViewSingleSelection(dayView)
+                    calendarView.didSelectDayView(dayView)
+                }
                 
             case .Range(.Started):
                 print("Received start of range selection.")
@@ -68,7 +70,7 @@ private extension CVCalendarTouchController {
             }
         }
     }
-
+    
     func monthViewLocation(location: CGPoint, doesBelongToDayView dayView: CVCalendarDayView) -> Bool {
         var dayViewFrame = dayView.frame
         let weekIndex = dayView.weekView.index
@@ -111,7 +113,7 @@ private extension CVCalendarTouchController {
                 }
             }
         }
-
+        
         
         return owner
     }

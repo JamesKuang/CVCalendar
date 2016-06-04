@@ -20,7 +20,7 @@ public final class CVCalendarDayViewControlCoordinator {
             return calendarView.animator
         }
     }
-
+    
     // MARK: - initialization
     public init(calendarView: CalendarView) {
         self.calendarView = calendarView
@@ -51,7 +51,7 @@ extension CVCalendarDayViewControlCoordinator {
     }
 }
 
-// MARK: - Animator reference 
+// MARK: - Animator reference
 
 private extension CVCalendarDayViewControlCoordinator {
     func presentSelectionOnDayView(dayView: DayView) {
@@ -69,27 +69,27 @@ private extension CVCalendarDayViewControlCoordinator {
 
 extension CVCalendarDayViewControlCoordinator {
     public func performDayViewSingleSelection(dayView: DayView) {
-        selectionSet.insert(dayView)
-        
-        if selectionSet.count > 1 {
-//            let count = selectionSet.count-1
-            for dayViewInQueue in selectionSet {
-                if dayView != dayViewInQueue {
-                    if dayView.calendarView != nil {
-                        presentDeselectionOnDayView(dayViewInQueue)
-                    }
-                    
-                }
-                
-            }
-        }
+        //        selectionSet.insert(dayView)
+        //
+        //        if selectionSet.count > 1 {
+        ////            let count = selectionSet.count-1
+        //            for dayViewInQueue in selectionSet {
+        //                if dayView != dayViewInQueue {
+        //                    if dayView.calendarView != nil {
+        //                        presentDeselectionOnDayView(dayViewInQueue)
+        //                    }
+        //
+        //                }
+        //
+        //            }
+        //        }
         
         if let _ = animator {
             if selectedDayView != dayView {
                 selectedDayView = dayView
                 presentSelectionOnDayView(dayView)
             }
-        } 
+        }
     }
     
     public func performDayViewRangeSelection(dayView: DayView) {

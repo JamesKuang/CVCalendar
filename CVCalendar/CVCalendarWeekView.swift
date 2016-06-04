@@ -192,7 +192,7 @@ extension CVCalendarWeekView {
     public func reloadDayViews() {
         
         if let size = calendarView.dayViewSize, let dayViews = dayViews {
-//            let hSpace = calendarView.appearance.spaceBetweenDayViews!
+            //            let hSpace = calendarView.appearance.spaceBetweenDayViews!
             
             for (index, dayView) in dayViews.enumerate() {
                 let hSpace = calendarView.appearance.spaceBetweenDayViews!
@@ -201,6 +201,10 @@ extension CVCalendarWeekView {
                 dayView.reloadContent()
             }
         }
+    }
+    
+    public func refreshAccessoryViews() {
+        self.dayViews.forEach { $0.refreshAccessoryViews() }
     }
 }
 

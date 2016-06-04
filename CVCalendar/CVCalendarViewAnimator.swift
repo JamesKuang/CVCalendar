@@ -32,7 +32,7 @@ extension CVCalendarViewAnimator {
     public func animateSelectionOnDayView(dayView: DayView) {
         let selectionAnimation = delegate.selectionAnimation()
         dayView.setSelectedWithType(.Single)
-        selectionAnimation(dayView) { [unowned dayView] _ in
+        selectionAnimation(dayView) { _ in
             // Something...
         }
     }
@@ -41,7 +41,7 @@ extension CVCalendarViewAnimator {
         let deselectionAnimation = delegate.deselectionAnimation()
         deselectionAnimation(dayView) { [weak dayView] _ in
             if let selectedDayView = dayView {
-               self.coordinator.deselectionPerformedOnDayView(selectedDayView)
+                self.coordinator.deselectionPerformedOnDayView(selectedDayView)
             }
         }
     }
@@ -71,7 +71,7 @@ private extension CVCalendarViewAnimator {
             UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.3, initialSpringVelocity: 0.1, options: UIViewAnimationOptions.BeginFromCurrentState, animations: {
                 dayView.circleView?.transform = CGAffineTransformMakeScale(1, 1)
                 dayView.dayLabel?.transform = CGAffineTransformMakeScale(1, 1)
-            }, completion: completion)
+                }, completion: completion)
         }
     }
     
@@ -85,7 +85,7 @@ private extension CVCalendarViewAnimator {
                     if let circleView = dayView.circleView {
                         circleView.transform = CGAffineTransformMakeScale(0.1, 0.1)
                     }
-                }, completion: completion)
+                    }, completion: completion)
             }
         }
     }
@@ -98,7 +98,7 @@ private extension CVCalendarViewAnimator {
                 if let circleView = dayView.circleView {
                     circleView.alpha = 0
                 }
-            }, completion: completion)
+                }, completion: completion)
         }
     }
     
@@ -108,7 +108,7 @@ private extension CVCalendarViewAnimator {
             UIView.animateWithDuration(0.25, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
                 dayView.circleView?.transform = CGAffineTransformMakeScale(0.1, 0.1)
                 dayView.circleView?.alpha = 0.0
-            }, completion: completion)
+                }, completion: completion)
         }
     }
 }

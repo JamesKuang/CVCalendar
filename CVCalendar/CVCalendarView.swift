@@ -43,6 +43,7 @@ public final class CVCalendarView: UIView {
     public var (weekViewSize, dayViewSize): (CGSize?, CGSize?)
     
     private var validated = false
+    private var oldSize = CGSize.zero
     
     public var firstWeekday: Weekday {
         get {
@@ -192,7 +193,7 @@ public final class CVCalendarView: UIView {
         super.init(frame: frame)
         hidden = true
     }
-
+    
     /// IB Initialization
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -211,7 +212,7 @@ extension CVCalendarView {
             
             let allowed = selfSize.width <= screenSize.width && selfSize.height <= screenSize.height
             
-            if !validated && allowed {
+            if oldSize != screenSize && allowed {
                 let width = selfSize.width
                 let height: CGFloat
                 let countOfWeeks = CGFloat(6)
@@ -241,7 +242,7 @@ extension CVCalendarView {
                     
                     weekViewSize = CGSizeMake(width, height)
                     dayViewSize = CGSizeMake((width / 7.0) - hSpace, height)
-                    validated = true
+                    oldSize = screenSize
                     
                     contentController.updateFrames(selfSize != contentViewSize ? bounds : CGRectZero)
                 }
@@ -275,6 +276,10 @@ extension CVCalendarView {
     
     public func toggleCurrentDayView() {
         contentController.togglePresentedDate(NSDate())
+    }
+    
+    public func showCurrentDate() {
+        contentController.showPresentedDate(NSDate())
     }
     
     public func loadNextView() {
@@ -317,15 +322,15 @@ extension CVCalendarView {
     }
 }
 
-// MARK: - Mode load 
+// MARK: - Mode load
 
 private extension CVCalendarView {
     func loadCalendarMode() {
         if let delegate = delegate {
             calendarMode = delegate.presentationMode()
             switch delegate.presentationMode() {
-                case .MonthView: contentController = MonthContentViewController(calendarView: self, frame: bounds)
-                case .WeekView: contentController = WeekContentViewController(calendarView: self, frame: bounds)
+            case .MonthView: contentController = MonthContentViewController(calendarView: self, frame: bounds)
+            case .WeekView: contentController = WeekContentViewController(calendarView: self, frame: bounds)
             }
             
             addSubview(contentController.scrollView)

@@ -96,7 +96,11 @@ extension CVCalendarMonthView {
                     weekView.reloadDayViews()
                 }
             }
-        }, collapsingOnNil: true, withObjects: weekViews)
+            }, collapsingOnNil: true, withObjects: weekViews)
+    }
+    
+    public func refreshAccessoryViews() {
+        weekViews.forEach { $0.refreshAccessoryViews() }
     }
 }
 

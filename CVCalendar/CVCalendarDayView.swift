@@ -187,7 +187,7 @@ extension CVCalendarDayView {
         
         addSubview(dayLabel!)
     }
-
+    
     public func preliminarySetup() {
         if let delegate = calendarView.delegate, shouldShow = delegate.preliminaryView?(shouldDisplayOnDayView: self) where shouldShow {
             if let preView = delegate.preliminaryView?(viewOnDayView: self) {
@@ -287,10 +287,10 @@ extension CVCalendarDayView {
                     dotMarkers.append(dotMarker)
                 }
                 
-                let coordinator = calendarView.coordinator
-                if self == coordinator.selectedDayView {
-                    moveDotMarkerBack(false, coloring: false)
-                }
+                //                let coordinator = calendarView.coordinator
+                //                if self == coordinator.selectedDayView {
+                //                    moveDotMarkerBack(false, coloring: false)
+                //                }
             }
         }
     }
@@ -301,7 +301,7 @@ extension CVCalendarDayView {
 extension CVCalendarDayView {
     public func moveDotMarkerBack(unwinded: Bool, var coloring: Bool) {
         for dotMarker in dotMarkers {
-
+            
             if let calendarView = calendarView, let dotMarker = dotMarker {
                 var shouldMove = true
                 if let delegate = calendarView.delegate, let move = delegate.dotMarker?(shouldMoveOnHighlightingOnDayView: self) where !move {
@@ -391,15 +391,15 @@ extension CVCalendarDayView {
     }
     
     public func moveView(view: UIView, onCircleView circleView: UIView, fromAngle angle: CGFloat, toAngle endAngle: CGFloat, straight: Bool) {
-//        let condition = angle > endAngle ? angle > endAngle : angle < endAngle
+        //        let condition = angle > endAngle ? angle > endAngle : angle < endAngle
         if straight && angle < endAngle || !straight && angle > endAngle {
             UIView.animateWithDuration(pow(10, -1000), delay: 0, usingSpringWithDamping: 0.4, initialSpringVelocity: 10, options: UIViewAnimationOptions.CurveEaseIn, animations: {
                 let angle = angle.toRadians()
                 view.center = self.pointAtAngle(angle, withinCircleView: circleView)
-                }) { _ in
-                    let speed = CGFloat(750).toRadians()
-                    let newAngle = straight ? angle + speed : angle - speed
-                    self.moveView(view, onCircleView: circleView, fromAngle: newAngle, toAngle: endAngle, straight: straight)
+            }) { _ in
+                let speed = CGFloat(750).toRadians()
+                let newAngle = straight ? angle + speed : angle - speed
+                self.moveView(view, onCircleView: circleView, fromAngle: newAngle, toAngle: endAngle, straight: straight)
             }
         }
     }
@@ -514,6 +514,13 @@ extension CVCalendarDayView {
         if circleView != nil {
             setSelectedWithType(.Single)
         }
+    }
+    
+    public func refreshAccessoryViews() {
+        self.setupDotMarker()
+        self.preliminarySetup()
+        self.supplementarySetup()
+        self.topMarkerSetup()
     }
 }
 
