@@ -208,8 +208,8 @@ extension CVCalendarView {
         if let _ = delegate, let contentController = contentController {
             let contentViewSize = contentController.bounds.size
             let selfSize = bounds.size
-            let screenSize = UIScreen.mainScreen().bounds.size
-            
+            let screenSize = superview!.bounds.size
+
             let allowed = selfSize.width <= screenSize.width && selfSize.height <= screenSize.height
             
             if oldSize != screenSize && allowed {
